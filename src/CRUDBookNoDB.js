@@ -42,21 +42,14 @@ app.post('/books', (req, res) => {
     res.send(book);
 });
 
-app.put('/books/:id',(req,res) =>{
-  const book = books.find(b => b.id === parseInt(req.params,id));
-  if(!book) res.status(404).send('Book not found');
-  book.title = req.body.title;
-  book.author = req.body.author;
-  res.send(book);
-})
-
-app.delete('/books/:id', (req, res) => {
+app.put('/books/:id', (req, res) => {
     const book = books.find(b => b.id === parseInt(req.params.id));
     if (!book) res.status(404).send('Book not found');
     const index = books.indexOf(book);
     books.splice(index, 1);
     res.send(book);
+
 });
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on port http://localhost:${port}`));
+app.listen(port, () => console.log(`Listening on port ${port}...`));
