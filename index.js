@@ -1,11 +1,11 @@
+require("dotenv").config(); 
 const express = require('express');
-const sqlite3 = require('sqlite3')
+const sqlite3 = require('sqlite3'); //libary database
 const app = express();
 
-const db = new sqlite3.Database(`./Database/Book.sqlite`);
+const db = new sqlite3.Database(`./Database/Book.sqlite`); // new database
 
-
-app.use(express.json());
+app.use(express.json()); //send data to json
 
 db.run(`CREATE TABLE IF NOT EXISTS books(
         id INTEGER PRIMARY KEY,
@@ -44,7 +44,7 @@ app.post('/books',(req,res) => {
         if(err){
             res.status(500).send(err);
         }else{
-            book.id =this.lastID;
+            book.id = this.lastID;
             res.send(book);
         }
     })
@@ -61,15 +61,15 @@ app.put('/books/:id', (req,res) => {
     })
 })
 
-app.delete('/books/:id' , (req,res) => {
-    db.run('DELETE FROM books WHERE id = ?', req.params.id, function(err){
-        if(err){
+app.delete('/books/:id', (req, res) => {
+    db.run('DELETE FROM books WHERE id = ?', req.params.id, function(err) {
+        if (err) {
             res.status(500).send(err);
-        }else{
-            res.send({})
+        } else {
+            res.send({});
         }
-    })
-})
+    });
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port http://localhost:${port}`));
